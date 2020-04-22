@@ -32,13 +32,16 @@ def get_ms(output, ping):
     return ping
 
 
-def cal_average(num):
-    sum_num = 0
-    for t in num:
-        sum_num = sum_num + t           
+def cal_average(ping):
+    try:
+        sum_num = 0
+        for t in ping:
+            sum_num = sum_num + t           
 
-    avg = sum_num / len(num)
-    return avg
+        avg = sum_num / len(ping)
+        return avg
+    except:
+        return ping[1]
 
 
 def get_time_by_timezone():

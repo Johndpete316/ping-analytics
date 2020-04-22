@@ -2,7 +2,7 @@ from tools import parse_output, get_ms, cal_average, get_time_by_timezone, get_d
 from database import db_main
 import time, threading, sqlite3
 
-wait_seconds = 10
+wait_seconds = 3600
 
 def main():
     conn = sqlite3.connect('ping-analytics.db')
