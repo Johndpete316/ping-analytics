@@ -26,3 +26,9 @@ hs_err_pid*
 # Database files
 *.db
 *.db
+
+
+# libraries
+__pycache__/
+.vscode/
+node_modules/
