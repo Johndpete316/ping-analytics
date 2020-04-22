@@ -6,8 +6,8 @@ The backend is writen in python 3, with a sqlite database to store the data.
 
 I run the ping command from whatever OS its on, (windows, linux, etc.) and then parse that down to get just the ping in milliseconds. 
 
-# Frontent
-The frontent is a node.js react server, which has an authentication system in there for good measure from Auth0. 
+# Frontent - Express
+The frontent is a node.js express server, which has an authentication system in there for good measure from Auth0. 
 
 The frontent reads the sqlite .db file, and displays it for right now, in a text box on screen. Eventually this will be turned into a table.
 
