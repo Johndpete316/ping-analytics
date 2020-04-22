@@ -9,5 +9,5 @@ def db_main(est, mdt, pt, ping_value, conn):
 
 
 def init_db(c):
-    c.execute("CREATE TABLE IF NOT EXISTS ping(est TEXT, mdt TEXT, pt TEXT, ping_value REAL)")
+    c.execute("CREATE TABLE IF NOT EXISTS ping(est TEXT, mdt TEXT, pst TEXT, ping_value REAL)")
 
