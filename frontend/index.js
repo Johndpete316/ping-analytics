@@ -4,10 +4,6 @@
 const express = require("express")
 const path = require("path")
 
-require("dotenv").config()
-
-const authRouter = require("./auth")
-
 const sqlite3 = require("sqlite3").verbose()
 
 // sqlite connection
