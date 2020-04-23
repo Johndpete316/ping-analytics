@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:800|Merriweather+Sans|Share+Tech+Mono");
 
+
+
+
 :root {
   --logo-font: "Share Tech Mono", monospace;
   --header-font: "Raleway", sans-serif;
@@ -8,7 +11,8 @@
   --primary: #ffffff;
   --secondary: #2a3747;
 
-  --highlight: #fa4141;
+  --highlight: #278cff;
+  --highlight-hover: #439bff;
 
   --ui-shawdow: 0 2px 4px -1px rgba(0, 0, 0, 0.06),
     0 4px 5px 0 rgba(0, 0, 0, 0.06), 0 1px 10px 0 rgba(0, 0, 0, 0.08);
@@ -67,16 +71,17 @@ a {
 }
 
 .View {
-  flex: 1;
-  display: inline-block;
+  flex: 3;
+  display: inline-blocks;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
   height: 100%;
   width: 100%;
 
   padding: 20px;
+  padding-left: 15%;
 
   background-size: cover;
 
@@ -89,7 +94,7 @@ a {
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: 80%;
 
   border-radius: 5px;
 
@@ -104,6 +109,7 @@ a {
 }
 
 .Message {
+  width: 80%;
   background: white;
   padding: 30px;
   border-bottom: var(--ui-shawdow-border);
@@ -122,15 +128,22 @@ a {
 
 .NavButtons {
   display: flex;
-  width: 100%;
+  width: 35%;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-end;
+  margin: 1%;
   padding: 0 20px;
 }
 
 .NavButton:hover {
     box-shadow: 0px 0px;
-} 
+    font-weight: lighter;
+    background: var(--highlight-hover);
+}
+
+.MessageButton {
+  width: 150%;
+}
 
 .NavButton {
   display: flex;
@@ -139,17 +152,18 @@ a {
 
   height: 55px;
   width: 150px;
+  margin: 10%;
 
   background: var(--highlight);
 
   border-radius: 30px;
 
   font-size: 16px;
-  font-weight: bold;
+  font-weight: bolder;
   color: white;
 
   text-transform: capitalize;
-  box-shadow: 1px 2px #2a3747;
+  box-shadow: 1px 2px #8b9095;
   border-bottom: var(--ui-shawdow-border);
 }
 
@@ -161,4 +175,30 @@ a {
 .UserView {
     background: url("gradient.jpg") left bottom;
     background-size: cover;
+}
+
+@media screen and (max-width:800px) { 
+  
+  .View {
+    padding: 0px;
+    padding-left: 0%;
   }
+
+  .Banner {
+    width: auto;
+  }
+  
+  .Message {
+    width: auto;
+  }
+  
+  .MessageButton {
+    width: 15%;
+  }
+  
+  .NavButtons {
+    width: auto;
+    display: inline;
+    margin: auto;
+  }
+}

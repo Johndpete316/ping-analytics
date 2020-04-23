@@ -6,14 +6,6 @@ const path = require("path")
 
 const sqlite3 = require("sqlite3").verbose()
 
-// sqlite connection
-let db = new sqlite3.Database('../ping-analytics.db', (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Connected to the database.db database.');
-});
-
 // App Variables
 const app = express()
 const port = process.env.PORT || "8000"
@@ -30,12 +22,25 @@ app.get("/", (req, res) => {
     res.render("index", { title: "Home" })
 })
 
-app.get("/user", (req, res) => {
-    db.get(`SELECT ROWID, * FROM ping ORDER BY ROWID DESC LIMIT 1`, (err, row) => {
+app.get("/ping",  (req, res) => {
+    res.render("ping", {title: "Ping"})
+})
+
+app.get("/high-ping", (req, res) => {
+
+    let db = new sqlite3.Database('../ping-analytics.db', (err) => {
         if (err) {
           console.error(err.message);
         }
-        res.render("user", { 
+        console.log('Connected to the database.db database.');
+    });
+
+
+    db.get(`SELECT MAX(ping_value) AS ping_value, *, ROWID FROM ping`, (err, row) => {
+        if (err) {
+          console.error(err.message);
+        }
+        res.render("ping-high", { 
             title: "profile", 
             userProfile: { 
                 nickname: "Auth0",
@@ -43,12 +48,52 @@ app.get("/user", (req, res) => {
                     rowid: row.rowid,
                     time_est: row.est,
                     time_mdt: row.mdt,
-                    time_ost: row.pst,
+                    time_pst: row.pst,
                     ping: row.ping_value
                 }
             }
         })
-        console.log(row.rowid)
+
+    });
+
+
+    // close db
+
+    db.close((err) => {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log('Close the database connection.');
+    });
+})
+
+app.get("/low-ping", (req, res) => {
+
+    let db = new sqlite3.Database('../ping-analytics.db', (err) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Connected to the database.db database.');
+    });
+
+
+    db.get(`SELECT MIN(ping_value) AS ping_value, *, ROWID FROM ping`, (err, row) => {
+        if (err) {
+          console.error(err.message);
+        }
+        res.render("ping-low", { 
+            title: "Lowest Ping", 
+            userProfile: { 
+                username: "Auth0",
+                database: {
+                    rowid: row.rowid,
+                    time_est: row.est,
+                    time_mdt: row.mdt,
+                    time_pst: row.pst,
+                    ping: row.ping_value
+                }
+            }
+        })
 
     });
 
