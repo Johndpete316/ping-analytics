@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/user", (req, res) => {
-    db.get(`SELECT ROWID, * FROM ping `, (err, row) => {
+    db.get(`SELECT ROWID, * FROM ping ORDER BY ROWID DESC LIMIT 1`, (err, row) => {
         if (err) {
           console.error(err.message);
         }
