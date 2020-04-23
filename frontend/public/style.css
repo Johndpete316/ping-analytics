@@ -68,7 +68,7 @@ a {
 
 .View {
   flex: 1;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
