@@ -126,13 +126,38 @@ a {
   line-height: 1.5em;
 }
 
+/* table */
+
+.DataTable {
+  width: 100%;
+  border: 1;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
 .NavButtons {
   display: flex;
-  width: 35%;
+  width: 50%;
   justify-content: space-around;
   align-items: flex-end;
   margin: 1%;
   padding: 0 20px;
+}
+
+input {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: auto;
+  color: inherit;
+  background-color: inherit;
+  font-weight: inherit;
+
 }
 
 .NavButton:hover {
@@ -177,6 +202,9 @@ a {
     background-size: cover;
 }
 
+
+
+
 @media screen and (max-width:800px) { 
   
   .View {
@@ -200,5 +228,15 @@ a {
     width: auto;
     display: inline;
     margin: auto;
+  }
+
+  .DataTable {
+    width: 100%;
+    border: 1;
+  }
+  
+  th, td {
+    padding: 1%;
+    text-align: left;
   }
 }

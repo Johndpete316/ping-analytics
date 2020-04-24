@@ -3,8 +3,17 @@
 // Required External Modules
 const express = require("express")
 const path = require("path")
-
 const sqlite3 = require("sqlite3").verbose()
+
+const data = require("./data.json")
+
+const get_database = require("./tools")
+
+const pino = require('pino');
+const expressPino = require('express-pino-logger');
+
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
+const expressLogger = expressPino({ logger });
 
 // App Variables
 const app = express()
@@ -15,18 +24,39 @@ const port = process.env.PORT || "8000"
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "pug")
 app.use(express.static(path.join(__dirname, "public")))
+app.use(expressLogger)
 
 
 // Route Definitions
 app.get("/", (req, res) => {
+    logger.debug(`${req.ip} sent GET to /}`)
+    
     res.render("index", { title: "Home" })
+
 })
 
-app.get("/ping",  (req, res) => {
-    res.render("ping", {title: "Ping"})
+app.get("/ping-function",  (req, res) => {
+    logger.debug(`${req.ip} sent GET to /ping-function}`)
+    
+    get_database()
+    res.redirect("/ping")
+})
+
+app.get("/ping", (req, res) => {
+    logger.debug(`${req.ip} sent GET to /ping}`)
+
+    const data = require("./data.json")
+
+
+    res.render("ping", {
+        title: "ping project",
+        data: data
+    })
 })
 
 app.get("/high-ping", (req, res) => {
+    logger.debug(`${req.ip} sent GET to /high-ping}`)
+    
 
     let db = new sqlite3.Database('../ping-analytics.db', (err) => {
         if (err) {
@@ -68,6 +98,8 @@ app.get("/high-ping", (req, res) => {
 })
 
 app.get("/low-ping", (req, res) => {
+    logger.debug(`${req.ip} sent GET to /low-ping}`)
+
 
     let db = new sqlite3.Database('../ping-analytics.db', (err) => {
         if (err) {
@@ -108,8 +140,20 @@ app.get("/low-ping", (req, res) => {
     });
 })
 
+
+app.get("/development", (req, res) => {
+    logger.debug(`${req.ip} sent GET to /development}`)
+
+    res.render("development", {
+        title: "development",
+        data: data
+    })
+})
+
+
 // Server Activation
 app.listen(port, () => {
+    logger.debug(`Server is listening on port ${port}`)
     console.log(`Listening for requests on http://localhost:${port}`)
 })
 

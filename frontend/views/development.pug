@@ -9,6 +9,8 @@ block layout-content
           div.NavButton Highest Ping
         a(href="/low-ping")
           div.NavButton Lowest Ping
+        div.NavButton= func.get_database()
+
     div.Message
       table.DataTable
         tr
