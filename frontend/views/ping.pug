@@ -10,9 +10,21 @@ block layout-content
         a(href="/low-ping")
           div.NavButton Lowest Ping
     div.Message
-      div.Title
-        h3 Making the Best
-        h1 Food For Devs
-      span.Details Access the WHATABYTE Team Portal
+      table.DataTable
+        tr
+            th id
+            th time est
+            th time mdt
+            th time pst
+            th ping
+
+
+        each val, index in data
+            tr
+                td= val.rowid 
+                td= val.est
+                td= val.mdt
+                td= val.pst
+                td= val.ping_value
     div.NavButtons
         
