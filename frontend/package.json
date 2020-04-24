@@ -6,21 +6,28 @@
   "scripts": {
     "dev": "nodemon ./index.js",
     "ui": "browser-sync start --proxy=localhost:8000 --files='**/*.css, **/*.pug, **/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "production": "LOG_LEVEL=debug node index.js | ./node_modules/.bin/pino-pretty > main.log"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.26.7",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "pino-pretty": "^4.0.0"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
     "express-session": "^1.17.1",
+    "install": "^0.13.0",
+    "node-cron": "^2.0.3",
+    "npm": "^6.14.4",
     "passport": "^0.4.1",
     "passport-auth0": "^1.3.2",
+    "pino": "^6.2.1",
     "pug": "^2.0.4",
     "sqlite3": "^4.1.1"
   }
