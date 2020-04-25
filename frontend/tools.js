@@ -3,7 +3,6 @@ const sqlite3 = require('sqlite3')
 const cron = require("node-cron")
 
 cron.schedule('* * * * *', () => {
-    console.log("get-database")
     get_database()
 })
 
@@ -31,7 +30,6 @@ function get_database() {
         }
         console.log('Close the database connection.');
     });
-    console.error("test")
 
 }
 

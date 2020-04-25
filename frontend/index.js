@@ -31,24 +31,14 @@ app.use(expressLogger)
 app.get("/", (req, res) => {
     logger.debug(`${req.ip} sent GET to /}`)
     
-    res.render("index", { title: "Home" })
+    res.render("ping-project/index", { title: "Home" })
 
-})
-
-app.get("/ping-function",  (req, res) => {
-    logger.debug(`${req.ip} sent GET to /ping-function}`)
-    
-    get_database()
-    res.redirect("/ping")
 })
 
 app.get("/ping", (req, res) => {
     logger.debug(`${req.ip} sent GET to /ping}`)
 
-    const data = require("./data.json")
-
-
-    res.render("ping", {
+    res.render("ping-project/ping", {
         title: "ping project",
         data: data
     })
@@ -70,7 +60,7 @@ app.get("/high-ping", (req, res) => {
         if (err) {
           console.error(err.message);
         }
-        res.render("ping-high", { 
+        res.render("ping-project/ping-high", { 
             title: "profile", 
             userProfile: { 
                 nickname: "Auth0",
@@ -113,7 +103,7 @@ app.get("/low-ping", (req, res) => {
         if (err) {
           console.error(err.message);
         }
-        res.render("ping-low", { 
+        res.render("ping-project/ping-low", { 
             title: "Lowest Ping", 
             userProfile: { 
                 username: "Auth0",
@@ -144,7 +134,7 @@ app.get("/low-ping", (req, res) => {
 app.get("/development", (req, res) => {
     logger.debug(`${req.ip} sent GET to /development}`)
 
-    res.render("development", {
+    res.render("ping-project/development", {
         title: "development",
         data: data
     })
