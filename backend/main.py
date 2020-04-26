@@ -2,8 +2,10 @@ from tools import parse_output, get_ms, cal_average, get_time_by_timezone, get_d
 from database import db_main
 from mongodb import insert_data
 import time, threading, sqlite3
+import signal
 
-wait_seconds = 3600
+
+wait_seconds = 1800
 
 def main():
     #conn = sqlite3.connect('../ping-analytics.db')
@@ -23,7 +25,9 @@ def main():
     print(f'Data: \n {output}')
     print(f'\n\nPing: {avg_ping}')
 
+    
     threading.Timer(wait_seconds, main).start()
+
 
 main()
 
