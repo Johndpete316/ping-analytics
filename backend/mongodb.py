@@ -10,17 +10,21 @@ client = MongoClient(url)
 db = client.ping
 
 
-def insert_data(est, mdt, pst, ping_value):
+def insert_data(est, mdt, pst, avg_ping, ip):
     date = datetime.now()
 
 
     ping = {
         "_id": date.strftime("%x::%X-%p"),
+        "day": date.strftime("%a"),
+        "hour": date.strftime("%I"),
+        "a/p": date.strftime("%p"),
         "user": "the-beast",
         "est": est,
         "mdt": mdt,
         "pst": pst,
-        "ping_value": ping_value
+        "ip": ip,
+        "ping_value": avg_ping
     }
 
     db.ping.insert_one(ping)
