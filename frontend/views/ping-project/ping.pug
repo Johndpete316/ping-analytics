@@ -10,6 +10,9 @@ block layout-content
         a(href="/low-ping")
           div.NavButton Lowest Ping
     div.Message
+      div.View
+        h3.Banner IP: #{data[0].ip}
+
       table.DataTable
         tr
             th id
@@ -20,11 +23,26 @@ block layout-content
 
 
         each val, index in data
-            tr
-                td= val.rowid 
-                td= val.est
-                td= val.mdt
-                td= val.pst
-                td= val.ping_value
+            if val.ping_value > 400
+              tr.Red
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td= val.ping_value
+            else if val.ping_value > 150
+              tr.Yellow
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td= val.ping_value
+            else 
+              tr
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td= val.ping_value
     div.NavButtons
         
