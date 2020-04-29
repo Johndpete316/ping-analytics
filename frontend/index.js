@@ -80,13 +80,6 @@ app.get("/high-ping", wrap(async (req, res, next) => {
     res.render("ping-project/ping-high", {
         title: "High Ping",
         userProfile: {
-            database: {
-                rowid: row[0]._id,
-                time_est: row[0].est,
-                time_mdt: row[0].mdt,
-                time_pst: row[0].pst,
-                ping: row[0].ping_value
-            },
             data: row
         }
     })
@@ -94,47 +87,20 @@ app.get("/high-ping", wrap(async (req, res, next) => {
     
 }))
 
-app.get("/low-ping", (req, res) => {
-
-
-    let db = new sqlite3.Database('../ping-analytics.db', (err) => {
-        if (err) {
-            console.error(err.message);
+app.get("/low-ping", wrap(async (req, res, next) => {
+    await client.connect()
+    cursor = client.db("ping").collection("ping").find({
+        ping_value: { $lt: 45 }
+    })
+    row = await cursor.toArray()
+    console.log(row)
+    res.render("ping-project/ping-low", {
+        title: "Low Ping",
+        userProfile: {
+            data: row
         }
-        console.log('Connected to the database.db database.');
-    });
-
-
-    db.get(`SELECT MIN(ping_value) AS ping_value, *, ROWID FROM ping`, (err, row) => {
-        if (err) {
-            console.error(err.message);
-        }
-        res.render("ping-project/ping-low", {
-            title: "Lowest Ping",
-            userProfile: {
-                username: "Auth0",
-                database: {
-                    rowid: row.rowid,
-                    time_est: row.est,
-                    time_mdt: row.mdt,
-                    time_pst: row.pst,
-                    ping: row.ping_value
-                }
-            }
-        })
-
-    });
-
-
-    // close db
-
-    db.close((err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Close the database connection.');
-    });
-})
+    })
+}))
 
 
 app.get("/development", (req, res) => {``
