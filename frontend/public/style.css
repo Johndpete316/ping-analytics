@@ -108,6 +108,10 @@ a {
   box-shadow: var(--ui-shawdow);
 }
 
+input {
+  margin-top: 4%;
+}
+
 .Message {
   width: 80%;
   background: white;
@@ -129,6 +133,7 @@ a {
 /* table */
 
 .DataTable {
+  table-layout:fixed;
   width: 100%;
   border: 1;
 }
@@ -144,7 +149,24 @@ a {
 th, td {
   padding: 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.924);
+}
+
+tr {
+  transition: background-color .5s, font-size .5s;
+}
+
+tr:hover {
+  background-color: rgb(236, 236, 236);
+  font-weight: bold;
+}
+
+tr.Yellow:hover {
+  background-color: rgba(243, 214, 85, 0.616);
+}
+
+tr.Red:hover {
+  background-color: rgba(243, 85, 85, 0.616);
 }
 
 .NavButtons {
@@ -202,12 +224,12 @@ input {
 }
 
 .WelcomeView {
-    background: url("gradient.jpg") left bottom;
+    background: url("gradient-1.png") left bottom;
     background-size: cover;
 }
 
 .UserView {
-    background: url("gradient.jpg") left bottom;
+    background: url("gradient-1.png") left bottom;
     background-size: cover;
 }
 
