@@ -1,0 +1,50 @@
+extends layout
+
+block layout-content
+  div.View.WelcomeView
+    h1.Banner
+      a(href="/") JOHN PETERSON
+      div.NavButtons
+        a(href="/high-ping")
+          div.NavButton Highest Ping
+        a(href="/low-ping")
+          div.NavButton Lowest Ping
+    div.Message
+      div.View
+        h3.Banner IP: #{data[0].ip}
+        input.Banner(type="text" id="myInput" onkeyup="search()" placeholder="Search Database...")
+
+
+      table.DataTable
+        tr
+            th(onClick="sortTable(0)") id
+            th time est
+            th time mdt
+            th time pst
+            th ping
+
+
+        each val, index in data
+            if val.ping_value > 400
+              tr.Red.Hover
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td.search= val.ping_value
+            else if val.ping_value > 100
+              tr.Yellow.Hover
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td.search= val.ping_value
+            else 
+              tr.Hover
+                  td= val._id 
+                  td= val.est
+                  td= val.mdt
+                  td= val.pst
+                  td.search= val.ping_value
+    div.NavButtons
+        

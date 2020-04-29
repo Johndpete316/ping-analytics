@@ -33,3 +33,5 @@ hs_err_pid*
 __pycache__/
 .vscode/
 node_modules/
+config.json
+cli.txt

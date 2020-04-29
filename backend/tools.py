@@ -3,8 +3,10 @@ import os
 from datetime import datetime
 import pytz
 
+ip = "51.161.117.73"
+
 def get_data():
-    stream = os.popen("ping -c 3 51.161.117.73")
+    stream = os.popen(f"ping -c 3 {ip}")
     output = stream.read()
     output = output.split(' ')
     output = parse_output(output)
