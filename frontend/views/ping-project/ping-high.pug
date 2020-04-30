@@ -17,18 +17,18 @@ block layout-content
             table.DataTable
                 tr
                     th id
-                    th time est
-                    th time mdt
-                    th time pst
+                    th.RemoveOnMobile time est
+                    th.RemoveOnMobile time mdt
+                    th.RemoveOnMobile time pst
                     th ping
 
 
                 each val, index in userProfile.data
                     tr
                         td= val._id 
-                        td= val.est
-                        td= val.mdt
-                        td= val.pst
+                        td.RemoveOnMobile= val.est
+                        td.RemoveOnMobile= val.mdt
+                        td.RemoveOnMobile= val.pst
                         td= val.ping_value
 
         div.NavButtons

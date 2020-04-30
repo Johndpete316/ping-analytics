@@ -12,7 +12,24 @@ block layout-content
             div.Title
                 h3 Making us the best
                 h1 Teammate profile
-            pre.Details=JSON.stringify(userProfile, null, 2)
+
+        div.Message
+            table.DataTable
+                tr
+                    th id
+                    th.RemoveOnMobile time est
+                    th.RemoveOnMobile time mdt
+                    th.RemoveOnMobile time pst
+                    th ping
+
+
+                each val, index in userProfile.data
+                    tr
+                        td= val._id 
+                        td.RemoveOnMobile= val.est
+                        td.RemoveOnMobile= val.mdt
+                        td.RemoveOnMobile= val.pst
+                        td= val.ping_value
         div.NavButtons
             a(href="/low-ping")
                 div.NavButton Refresh

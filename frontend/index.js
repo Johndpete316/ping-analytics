@@ -60,7 +60,7 @@ app.get("/", async (req, res) => {
 app.get("/ping", wrap( async (req, res, next) => {
     logger.debug(`${req.ip} sent GET to /ping}`)
     await client.connect()
-    cursor = client.db("ping").collection("ping").find({/*all*/})
+    cursor = client.db("ping").collection("ping").find({/*all*/}).sort( { _id: -1} )
     row = await cursor.toArray()
     console.log(row)
 

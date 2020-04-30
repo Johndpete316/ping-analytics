@@ -15,36 +15,44 @@ block layout-content
         input.Banner(type="text" id="myInput" onkeyup="search()" placeholder="Search Database...")
 
 
-      table.DataTable
+      table.DataTable.Sortable-table
         tr
             th(onClick="sortTable(0)") id
-            th time est
-            th time mdt
-            th time pst
-            th ping
+            th.RemoveOnMobile time est
+            th.RemoveOnMobile time mdt
+            th.RemoveOnMobile time pst
+            th(onClick="void(0)") ping
 
 
         each val, index in data
             if val.ping_value > 400
               tr.Red.Hover
                   td= val._id 
-                  td= val.est
-                  td= val.mdt
-                  td= val.pst
+                  td.RemoveOnMobile= val.est
+                  td.RemoveOnMobile= val.mdt
+                  td.RemoveOnMobile= val.pst
                   td.search= val.ping_value
             else if val.ping_value > 100
               tr.Yellow.Hover
                   td= val._id 
-                  td= val.est
-                  td= val.mdt
-                  td= val.pst
+                  td.RemoveOnMobile= val.est
+                  td.RemoveOnMobile= val.mdt
+                  td.RemoveOnMobile= val.pst
+                  td.search= val.ping_value
+            else if val.ping_value < 43
+              tr.Green.Hover
+                  td= val._id 
+                  td.RemoveOnMobile= val.est
+                  td.RemoveOnMobile= val.mdt
+                  td.RemoveOnMobile= val.pst
                   td.search= val.ping_value
             else 
               tr.Hover
                   td= val._id 
-                  td= val.est
-                  td= val.mdt
-                  td= val.pst
+                  td.RemoveOnMobile= val.est
+                  td.RemoveOnMobile= val.mdt
+                  td.RemoveOnMobile= val.pst
                   td.search= val.ping_value
+
     div.NavButtons
         
