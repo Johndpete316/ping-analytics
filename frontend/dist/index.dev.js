@@ -1,28 +1,12 @@
 "use strict";
 
-// index.js
 // Required External Modules
 var express = require("express");
 
 var path = require("path");
 
-var sqlite3 = require("sqlite3").verbose();
+var wrap = require('./wraper'); // App Variables
 
-var data = require("./data.json");
-
-var _require = require("./mongodb"),
-    setupDB = _require.setupDB,
-    findHighestPing = _require.findHighestPing;
-
-var wrap = require('./wraper');
-
-var pino = require('pino');
-
-var expressPino = require('express-pino-logger');
-
-var logger = pino({
-  level: process.env.LOG_LEVEL || 'info'
-}); // App Variables
 
 var app = express();
 var port = process.env.PORT || "8000"; // App configuration
@@ -31,30 +15,28 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express["static"](path.join(__dirname, "public"))); //configure mongodb
 
-var _require2 = require('mongodb'),
-    MongoClient = _require2.MongoClient;
+var _require = require('mongodb'),
+    MongoClient = _require.MongoClient;
 
-var _require3 = require("../config.json"),
-    password = _require3.password,
-    uri = _require3.uri;
+var _require2 = require("../config.json"),
+    password = _require2.password,
+    uri = _require2.uri;
 
 var client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}); // mongoDB functions
-// Route Definitions
+}); // Route Definitions
 
 app.get("/", function _callee(req, res) {
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          logger.debug("".concat(req.ip, " sent GET to /}"));
           res.render("ping-project/index", {
             title: "Home"
           });
 
-        case 2:
+        case 1:
         case "end":
           return _context.stop();
       }
@@ -66,20 +48,19 @@ app.get("/ping", wrap(function _callee2(req, res, next) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          logger.debug("".concat(req.ip, " sent GET to /ping}"));
-          _context2.next = 3;
+          _context2.next = 2;
           return regeneratorRuntime.awrap(client.connect());
 
-        case 3:
+        case 2:
           cursor = client.db("ping").collection("ping").find({
             /*all*/
           }).sort({
             _id: -1
           });
-          _context2.next = 6;
+          _context2.next = 5;
           return regeneratorRuntime.awrap(cursor.toArray());
 
-        case 6:
+        case 5:
           row = _context2.sent;
           console.log(row);
           res.render("ping-project/ping", {
@@ -87,7 +68,7 @@ app.get("/ping", wrap(function _callee2(req, res, next) {
             data: row
           });
 
-        case 9:
+        case 8:
         case "end":
           return _context2.stop();
       }
@@ -172,4 +153,4 @@ app.get("/development", function (req, res) {
 
 app.listen(port, function () {
   console.log("Listening for requests on http://localhost:".concat(port));
-}); // close connection
+});

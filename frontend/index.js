@@ -1,22 +1,7 @@
-// index.js
-
 // Required External Modules
 const express = require("express")
 const path = require("path")
-const sqlite3 = require("sqlite3").verbose()
-
-const data = require("./data.json")
-
-const { setupDB, findHighestPing} = require("./mongodb")
 const wrap = require('./wraper')
-
-
-const pino = require('pino');
-const expressPino = require('express-pino-logger');
-
-const logger = pino({
-    level: process.env.LOG_LEVEL || 'info'
-});
 
 // App Variables
 const app = express()
@@ -38,18 +23,8 @@ const client = new MongoClient(uri, {
         useUnifiedTopology: true
 });
 
-
-
-
-
-
-// mongoDB functions
-
-
-
 // Route Definitions
 app.get("/", async (req, res) => {
-    logger.debug(`${req.ip} sent GET to /}`)
 
     res.render("ping-project/index", {
         title: "Home"
@@ -58,7 +33,6 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/ping", wrap( async (req, res, next) => {
-    logger.debug(`${req.ip} sent GET to /ping}`)
     await client.connect()
     cursor = client.db("ping").collection("ping").find({/*all*/}).sort( { _id: -1} )
     row = await cursor.toArray()
@@ -116,5 +90,3 @@ app.get("/development", (req, res) => {``
 app.listen(port, () => {
     console.log(`Listening for requests on http://localhost:${port}`)
 })
-
-// close connection 
