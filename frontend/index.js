@@ -36,11 +36,23 @@ app.get("/ping", wrap( async (req, res, next) => {
     await client.connect()
     cursor = client.db("ping").collection("ping").find({/*all*/}).sort( { _id: -1} )
     row = await cursor.toArray()
-    console.log(row)
+    
+    ping_value = {
+        length: 0
 
+    }
+
+    for(var j = 0; j < row.length; j++) {
+        var id = row[j]._id
+        id = id.substring(0, 8)
+        n = String(j)
+        ping_value['length'] = j
+        ping_value[n] = row[n].ping_value + ', ' + row[n].est + ', ' + id
+    }
     res.render("ping-project/ping", {
         title: "ping project",
-        data: row
+        data: row,
+        ping_value: ping_value
     })
 }))
 

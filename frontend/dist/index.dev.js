@@ -44,6 +44,7 @@ app.get("/", function _callee(req, res) {
   });
 });
 app.get("/ping", wrap(function _callee2(req, res, next) {
+  var j, id;
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -62,13 +63,25 @@ app.get("/ping", wrap(function _callee2(req, res, next) {
 
         case 5:
           row = _context2.sent;
-          console.log(row);
+          ping_value = {
+            length: 0
+          };
+
+          for (j = 0; j < row.length; j++) {
+            id = row[j]._id;
+            id = id.substring(0, 8);
+            n = String(j);
+            ping_value['length'] = j;
+            ping_value[n] = row[n].ping_value + ', ' + row[n].est + ', ' + id;
+          }
+
           res.render("ping-project/ping", {
             title: "ping project",
-            data: row
+            data: row,
+            ping_value: ping_value
           });
 
-        case 8:
+        case 9:
         case "end":
           return _context2.stop();
       }

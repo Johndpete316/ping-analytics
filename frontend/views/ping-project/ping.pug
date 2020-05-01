@@ -1,5 +1,6 @@
 extends layout
 
+
 block layout-content
   div.View.WelcomeView
     h1.Banner
@@ -9,9 +10,13 @@ block layout-content
           div.NavButton Highest Ping
         a(href="/low-ping")
           div.NavButton Lowest Ping
+
     div.Message
       div.View
-        h3.Banner IP: #{data[0].ip}
+
+        canvas(id="myChart" width="400" height="200")
+
+        h3.Banner IP: #{data[0].ip}}
         input.Banner(type="text" id="myInput" onkeyup="search()" placeholder="Search Database...")
 
 
@@ -32,7 +37,7 @@ block layout-content
                   td.RemoveOnMobile= val.mdt
                   td.RemoveOnMobile= val.pst
                   td.search= val.ping_value
-            else if val.ping_value > 100
+            else if val.ping_value > 60
               tr.Yellow.Hover
                   td= val._id 
                   td.RemoveOnMobile= val.est
@@ -55,4 +60,65 @@ block layout-content
                   td.search= val.ping_value
 
     div.NavButtons
-        
+  
+  script.
+    
+    var data = !{JSON.stringify(ping_value)}
+
+    var time = []
+    var ping = []
+    var date = []
+    var dateDif = []
+
+    for(var j = 0; j < !{data.length}; j++) {
+      str = data[j]
+      var dataArray = str.split(",")
+      
+      num = Number(dataArray[0])
+
+      ping.push(num)
+      time.push(dataArray[1])
+      date.push(dataArray[2])
+    }
+
+    for(var j = 0; j < date.length; j++) {
+      if(date[j] == date[j - 1]) {
+
+      } else {
+        dateDif.push(j)
+      }
+    }
+
+    var ping_yesterday = ping.slice(dateDif[dateDif.length - 3], dateDif[dateDif.length - 2])
+    var time_yesterday = time.slice(dateDif[dateDif.length - 3], dateDif[dateDif.length - 2])
+    
+    var ping_today = ping.slice(dateDif[dateDif.length - 2], dateDif[dateDif.length - 1])
+    var time_today = time.slice(dateDif[dateDif.length - 2], dateDif[dateDif.length - 1])
+
+    var chart = document.getElementById('myChart').getContext('2d');
+    var lineChart = new Chart(chart, {
+         type: 'line',
+          data: {
+            labels: time_today,
+            datasets: [
+              { 
+                data: ping_today,
+                label: "Last 24 Hours",
+                borderColor: "#3e95cd",
+                fill: false
+              },
+              { 
+                data: ping_yesterday,
+                label: "Previous 24 Hours",
+                borderColor: "#8e5ea2",
+                fill: false
+              },
+            ],
+        options: {
+          title: {
+            display: true,
+            text: 'Ping'
+          }
+        }
+      }
+    });
