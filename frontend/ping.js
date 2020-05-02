@@ -20,7 +20,7 @@ async function main() {
     var time_est = moment().format('LTS')
     var date_est = moment().format('L')
 
-    var _id = `${date_est} ${time_est}`
+    var _id = `${date_est}-${time_est}`
 
     tcpp.ping({ address: host, port: 25677 }, async(err, data) => {
         console.log(_id)
@@ -37,12 +37,10 @@ async function main() {
             "date_utc": date_utc,
             "time_utc": time_utc,
             "ip": data.address,
-            "ping_avg": data.avg,
-            "ping_max": data.max,
-            "ping_min": data.min
+            "ping_value": data.avg
         }
         await client.connect()
-        await client.db("data").collection("ping-data").insertOne(ping_data).catch( (err) => {
+        await client.db("ping").collection("ping-data").insertOne(ping_data).catch( (err) => {
             console.error(err)
         });
 
