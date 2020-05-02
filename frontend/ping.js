@@ -10,10 +10,12 @@ const client = new MongoClient(uri, {
         useUnifiedTopology: true
 });
 
-var host = '51.161.117.73'
+var host = '172.217.1.238'
+console.log(host)
 
 async function main() {
-    x = 5
+    console.log('ran main')
+    x = 1800
     var time_utc = moment().tz("UTC").format('LTS')
     var date_utc = moment().tz("UTC").format('L')
 
@@ -22,10 +24,12 @@ async function main() {
 
     var _id = `${date_est}-${time_est}`
 
-    tcpp.ping({ address: host, port: 25677 }, async(err, data) => {
+    tcpp.ping({ address: host, port: 443 }, async(err, data) => {
         console.log(_id)
-
         
+        var ping = data.avg
+        var ping = Math.round(ping * 10 ) / 10
+        console.log(ping)
 
         ping_data = {
             "_id": _id,
@@ -37,10 +41,10 @@ async function main() {
             "date_utc": date_utc,
             "time_utc": time_utc,
             "ip": data.address,
-            "ping_value": data.avg
+            "ping_value": ping
         }
         await client.connect()
-        await client.db("ping").collection("ping-data").insertOne(ping_data).catch( (err) => {
+        await client.db("ping").collection("ping").insertOne(ping_data).catch( (err) => {
             console.error(err)
         });
 
