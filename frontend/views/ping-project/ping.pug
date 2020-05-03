@@ -16,16 +16,19 @@ block layout-content
 
         canvas(id="myChart" width="400" height="200")
 
-        h3.Banner IP: #{data[0].ip}}
+    div.Message
+      div.View
+
+        h3.Banner IP: #{data[0].ip}
         input.Banner(type="text" id="myInput" onkeyup="search()" placeholder="Search Database...")
 
 
-      table.DataTable.Sortable-table
+      table.DataTable.Sortable-table(cellpadding="0" style="border-collapse: collapse;")
         tr
             th(onClick="sortTable(0)") id
             th.RemoveOnMobile time est
-            th.RemoveOnMobile time mdt
-            th.RemoveOnMobile time pst
+            th.RemoveOnMobile time utc
+            th.RemoveOnMobile day
             th(onClick="void(0)") ping
 
 
@@ -33,30 +36,30 @@ block layout-content
             if val.ping_value > 400
               tr.Red.Hover
                   td= val._id 
-                  td.RemoveOnMobile= val.est
-                  td.RemoveOnMobile= val.mdt
-                  td.RemoveOnMobile= val.pst
+                  td.RemoveOnMobile= val.time_est
+                  td.RemoveOnMobile= val.time_utc
+                  td.RemoveOnMobile= val.day
                   td.search= val.ping_value
             else if val.ping_value > 60
               tr.Yellow.Hover
                   td= val._id 
-                  td.RemoveOnMobile= val.est
-                  td.RemoveOnMobile= val.mdt
-                  td.RemoveOnMobile= val.pst
+                  td.RemoveOnMobile= val.time_est
+                  td.RemoveOnMobile= val.time_utc
+                  td.RemoveOnMobile= val.day
                   td.search= val.ping_value
             else if val.ping_value < 43
               tr.Green.Hover
                   td= val._id 
-                  td.RemoveOnMobile= val.est
-                  td.RemoveOnMobile= val.mdt
-                  td.RemoveOnMobile= val.pst
+                  td.RemoveOnMobile= val.time_est
+                  td.RemoveOnMobile= val.time_utc
+                  td.RemoveOnMobile= val.day
                   td.search= val.ping_value
             else 
               tr.Hover
                   td= val._id 
-                  td.RemoveOnMobile= val.est
-                  td.RemoveOnMobile= val.mdt
-                  td.RemoveOnMobile= val.pst
+                  td.RemoveOnMobile= val.time_est
+                  td.RemoveOnMobile= val.time_utc
+                  td.RemoveOnMobile= val.day
                   td.search= val.ping_value
 
     div.NavButtons
@@ -64,11 +67,12 @@ block layout-content
   script.
     
     var data = !{JSON.stringify(ping_value)}
-
+    
     var time = []
     var ping = []
     var date = []
     var dateDif = []
+    var newDate = []
 
     for(var j = 0; j < !{data.length}; j++) {
       str = data[j]
@@ -86,14 +90,18 @@ block layout-content
 
       } else {
         dateDif.push(j)
+        newDate.push(date[j])
       }
     }
 
-    var ping_yesterday = ping.slice(dateDif[dateDif.length - 3], dateDif[dateDif.length - 2])
-    var time_yesterday = time.slice(dateDif[dateDif.length - 3], dateDif[dateDif.length - 2])
+    console.log(newDate)
+
+
+    var ping_yesterday = ping.slice(dateDif[2], dateDif[3])
+    var time_yesterday = time.slice(dateDif[2], dateDif[3])
     
-    var ping_today = ping.slice(dateDif[dateDif.length - 2], dateDif[dateDif.length - 1])
-    var time_today = time.slice(dateDif[dateDif.length - 2], dateDif[dateDif.length - 1])
+    var ping_today = ping.slice(dateDif[0], dateDif[1])
+    var time_today = time.slice(dateDif[0], dateDif[1])
 
     var chart = document.getElementById('myChart').getContext('2d');
     var lineChart = new Chart(chart, {
@@ -103,13 +111,13 @@ block layout-content
             datasets: [
               { 
                 data: ping_today,
-                label: "Last 24 Hours",
+                label: newDate[0],
                 borderColor: "#3e95cd",
                 fill: false
               },
               { 
                 data: ping_yesterday,
-                label: "Previous 24 Hours",
+                label: newDate[1],
                 borderColor: "#8e5ea2",
                 fill: false
               },

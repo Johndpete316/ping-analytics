@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
 
 app.get("/ping", wrap( async (req, res, next) => {
     await client.connect()
-    cursor = client.db("ping").collection("ping").find({/*all*/}).sort( { _id: -1} )
+    cursor = client.db("ping").collection("ping").find({/*all*/})
     row = await cursor.toArray()
     
     ping_value = {
@@ -47,7 +47,7 @@ app.get("/ping", wrap( async (req, res, next) => {
         id = id.substring(0, 8)
         n = String(j)
         ping_value['length'] = j
-        ping_value[n] = row[n].ping_value + ', ' + row[n].est + ', ' + id
+        ping_value[n] = row[n].ping_value + ', ' + row[n].time_est + ', ' + id
     }
     res.render("ping-project/ping", {
         title: "ping project",
@@ -100,5 +100,5 @@ app.get("/development", (req, res) => {``
 
 // Server Activation
 app.listen(port, () => {
-    console.log(`Listening for requests on http://localhost:${port}`)
+    console.log(`Listening for requests on http://localhost:${port}`) 
 })
