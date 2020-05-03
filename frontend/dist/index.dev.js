@@ -55,8 +55,6 @@ app.get("/ping", wrap(function _callee2(req, res, next) {
         case 2:
           cursor = client.db("ping").collection("ping").find({
             /*all*/
-          }).sort({
-            _id: -1
           });
           _context2.next = 5;
           return regeneratorRuntime.awrap(cursor.toArray());
@@ -72,7 +70,7 @@ app.get("/ping", wrap(function _callee2(req, res, next) {
             id = id.substring(0, 8);
             n = String(j);
             ping_value['length'] = j;
-            ping_value[n] = row[n].ping_value + ', ' + row[n].est + ', ' + id;
+            ping_value[n] = row[n].ping_value + ', ' + row[n].time_est + ', ' + id;
           }
 
           res.render("ping-project/ping", {

@@ -141,7 +141,7 @@ a:hover {
 /* table */
 
 .DataTable {
-  table-layout:fixed;
+  table-layout: auto;
   width: 100%;
   border: 1;
 }
@@ -166,6 +166,7 @@ th, td {
 
 tr {
   transition: background-color .5s, font-weight .2s;
+  border-collapse: collapse;
 }
 
 tr:hover {
@@ -251,10 +252,18 @@ input {
     background-size: cover;
 }
 
+canvas {
+  padding-right: 20%;
+}
 
 
 
 @media screen and (max-width:800px) {
+
+  canvas {
+    padding-right: 10%;
+  }
+  
   
   .RemoveOnMobile {
     display: none;
@@ -284,6 +293,7 @@ input {
   }
 
   .DataTable {
+    table-layout: auto;
     width: 100%;
     border: 1;
   }
